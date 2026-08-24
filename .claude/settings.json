@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(hugo version *)",
+      "Bash(go version *)",
+      "Bash(hugo new *)",
+      "Bash(git submodule *)",
+      "Bash(git checkout *)",
+      "Bash(rm -rf themes/blowfish)",
+      "Bash(cd \"c:\\\\Users\\\\ZG27BP\\\\Documents\\\\vismiroglou.github.io\"; rm -rf .git/modules/themes; git submodule add --depth 1 -b main https://github.com/nunocoracao/blowfish.git themes/blowfish 2>&1)",
+      "Bash(rm hugo.toml)",
+      "Bash(mkdir -p config/_default)",
+      "Bash(cp themes/blowfish/config/_default/hugo.toml themes/blowfish/config/_default/languages.en.toml themes/blowfish/config/_default/markup.toml themes/blowfish/config/_default/menus.en.toml themes/blowfish/config/_default/params.toml config/_default/)",
+      "Bash(hugo --minify)",
+      "Bash(rm -rf public resources)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "WebSearch",
+      "WebFetch(domain:arxiv.org)"
+    ]
+  }
+}

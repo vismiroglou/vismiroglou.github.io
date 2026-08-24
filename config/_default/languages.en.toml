@@ -2,31 +2,31 @@ disabled = false
 locale = "en"
 label = "English"
 weight = 1
-title = "Vismiroglou"
+title = "VI"
 
 [params]
   displayName = "EN"
   isoCode = "en"
   rtl = false
   dateFormat = "2 January 2006"
-  # logo = "img/logo.png"
+  # logo = "img/"
   # secondaryLogo = "img/secondary-logo.png"
   description = "Portfolio"
   # copyright = "Copy, _right?_ :thinking_face:"
 
 [params.author]
-  name = "Vismiroglou"
-  # image = "img/author.jpg"
+  name = "Vasiliki Ismiroglou"
+  image = "img/0125.jpg"
   imageQuality = 96
-  headline = "Welcome to my portfolio"
-  bio = "A little bit about you"
+  headline = "PhD Fellow | AAU | P1"
+  bio = "Making machines see underwater"
   links = [
-    { email = "mailto:vismiroglou@gmail.com" },
+    { email = "mailto:vasilikii@create.aau.dk" },
     { github = "https://github.com/vismiroglou" },
   ]
 
 # [params.author]
-#   name = "Your name here"
+#   name = "Vasiliki Ismiroglou"
 #   email = "youremail@example.com"
 #   image = "img/blowfish_logo.png"
 #   imageQuality = 96
