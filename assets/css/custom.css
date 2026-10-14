@@ -1,0 +1,107 @@
+/* Publications list: show the thumbnail on the right of each entry (desktop only;
+   on mobile it stays stacked above the text). */
+@media (min-width: 853px) {
+  .article-link--simple:has(a[href^="/publications/"]) > div:has(> header) {
+    flex: 1 1 0%;
+  }
+  .article-link--simple:has(a[href^="/publications/"]) > .thumbnail {
+    order: 1;
+    margin-right: 0;
+  }
+}
+
+/* ---- Publication pages (layouts/publications/single.html) ----
+   Structure follows the Academic Project Page template; colours and type come from Blowfish. */
+.pub-header {
+  max-width: 56rem;
+  margin-inline: auto;
+}
+.pub-authors a,
+.pub-venue a {
+  color: rgba(var(--color-primary-600), 1);
+  text-decoration: none;
+}
+.pub-authors a:hover,
+.pub-venue a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.dark .pub-authors a,
+.dark .pub-venue a {
+  color: rgba(var(--color-primary-400), 1);
+}
+.pub-author,
+.pub-affiliation {
+  white-space: nowrap;
+}
+
+/* Link buttons: same look as Blowfish's {{< button >}} shortcode */
+.pub-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: rgba(var(--color-neutral), 1);
+  background-color: rgba(var(--color-primary-600), 1);
+  transition: background-color 0.15s;
+}
+.pub-button:hover {
+  background-color: rgba(var(--color-primary-500), 1);
+}
+.dark .pub-button {
+  background-color: rgba(var(--color-primary-800), 1);
+}
+.dark .pub-button:hover {
+  background-color: rgba(var(--color-primary-700), 1);
+}
+
+.pub-teaser {
+  max-width: 56rem;
+  margin-inline: auto;
+}
+.pub-teaser img {
+  display: block;
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+/* Sections: centred column at Blowfish's prose width */
+.pub-section-inner {
+  max-width: 65ch;
+  margin-inline: auto;
+}
+.pub-section-inner > h2:first-child {
+  margin-top: 0;
+  text-align: center;
+}
+.pub-abstract {
+  padding: 2rem 1.25rem;
+  border-radius: 0.5rem;
+  background-color: rgba(var(--color-neutral-100), 1);
+}
+.dark .pub-abstract {
+  background-color: rgba(var(--color-neutral-800), 1);
+}
+.pub-abstract p {
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* Side-by-side images in Markdown: wrap <img> tags in <div class="image-row">.
+   Wraps onto a new line when the screen is too narrow. */
+.image-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-block: 1.5rem;
+}
+.image-row img {
+  margin: 0;
+  max-width: 100%;
+  height: auto;
+}

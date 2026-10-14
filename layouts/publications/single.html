@@ -1,0 +1,127 @@
+{{/* Publication page, structured like the Academic Project Page template
+   (title → authors → affiliations → venue → link buttons → teaser → abstract → content → BibTeX)
+   but styled with Blowfish's fonts and colours. See archetypes/publications.md for the front matter. */}}
+{{ define "main" }}
+  {{ $page := . }}
+  <article class="pub">
+    {{/* Title */}}
+    <header class="pub-header text-center">
+      <h1 class="mt-5 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        {{ .Title | emojify }}
+      </h1>
+
+      {{/* Authors, with affiliation numbers as superscripts */}}
+      {{ with .Params.authorList }}
+        {{ $last := sub (len .) 1 }}
+        <p class="pub-authors mt-4 text-lg text-neutral-700 dark:text-neutral-300">
+          {{- range $i, $a := . -}}
+            {{- $aff := $a.affiliation | default slice -}}
+            {{- if not (reflect.IsSlice $aff) }}{{ $aff = slice $aff }}{{ end -}}
+            <span class="pub-author">
+              {{- with $a.url -}}
+                <a href="{{ . }}" target="_blank" rel="noopener">{{ $a.name }}</a>
+              {{- else -}}
+                {{ $a.name }}
+              {{- end -}}
+              {{- if or $aff $a.equal -}}
+                <sup>{{ delimit $aff "," }}{{ if $a.equal }}*{{ end }}</sup>
+              {{- end -}}
+            </span>
+            {{- if lt $i $last }}, {{ end -}}
+          {{- end -}}
+        </p>
+      {{ end }}
+
+      {{/* Affiliations */}}
+      {{ with .Params.affiliations }}
+        <p class="pub-affiliations mt-2 text-neutral-500 dark:text-neutral-400">
+          {{- range $i, $name := . -}}
+            {{- if $i }}, {{ end -}}
+            <span class="pub-affiliation"><sup>{{ add $i 1 }}</sup>{{ $name }}</span>
+          {{- end -}}
+        </p>
+      {{ end }}
+
+      {{/* Venue */}}
+      {{ with .Params.venue }}
+        <p class="pub-venue mt-1 text-neutral-500 dark:text-neutral-400">{{ . | markdownify }}</p>
+      {{ end }}
+
+      {{/* Equal-contribution note, only if someone is marked */}}
+      {{ with .Params.authorList }}
+        {{ if where . "equal" true }}
+          <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400"><sup>*</sup>Indicates equal contribution</p>
+        {{ end }}
+      {{ end }}
+
+      {{/* Link buttons */}}
+      {{ with .Params.links }}
+        <div class="pub-links mt-6 flex flex-wrap justify-center gap-2">
+          {{ range where . "url" "!=" "" }}
+            <a class="pub-button" href="{{ .url }}" target="_blank" rel="noopener">
+              {{ with .icon }}{{ partial "icon.html" . }}{{ end }}
+              <span>{{ .name }}</span>
+            </a>
+          {{ end }}
+        </div>
+      {{ end }}
+
+      {{/* Tags, as Blowfish badges linking to each tag page */}}
+      {{ with .GetTerms "tags" }}
+        <div class="pub-tags mt-4 flex flex-wrap justify-center gap-2">
+          {{ range . }}
+            <a href="{{ .RelPermalink }}">{{ partial "badge.html" .LinkTitle }}</a>
+          {{ end }}
+        </div>
+      {{ end }}
+    </header>
+
+    {{/* Teaser: `teaser` front matter, else the page's feature image */}}
+    {{ $teaser := "" }}
+    {{ with .Params.teaser }}
+      {{ $teaser = $page.Resources.Get . }}
+    {{ else }}
+      {{ $images := .Resources.ByType "image" }}
+      {{ range slice "*feature*" "*cover*" "*thumbnail*" }}
+        {{ if not $teaser }}{{ $teaser = $images.GetMatch . }}{{ end }}
+      {{ end }}
+    {{ end }}
+    {{ with $teaser }}
+      <figure class="pub-teaser mt-10">
+        <img src="{{ .RelPermalink }}" alt="{{ $page.Title }}" loading="lazy" decoding="async" />
+        {{ with $page.Params.teaserCaption }}
+          <figcaption class="mt-3 text-center text-neutral-500 dark:text-neutral-400">{{ . | markdownify }}</figcaption>
+        {{ end }}
+      </figure>
+    {{ end }}
+
+    {{/* Abstract */}}
+    {{ with .Params.abstract }}
+      <section class="pub-section pub-abstract mt-10">
+        <div class="pub-section-inner prose dark:prose-invert">
+          <h2>Abstract</h2>
+          {{ . | $page.RenderString (dict "display" "block") }}
+        </div>
+      </section>
+    {{ end }}
+
+    {{/* Free-form content (results, figures, videos, …) */}}
+    {{ if .Content }}
+      <section class="pub-section mt-10">
+        <div class="pub-section-inner article-content prose dark:prose-invert">
+          {{ .Content }}
+        </div>
+      </section>
+    {{ end }}
+
+    {{/* BibTeX */}}
+    {{ with .Params.bibtex }}
+      <section class="pub-section mt-10 mb-20">
+        <div class="pub-section-inner prose dark:prose-invert">
+          <h2>BibTeX</h2>
+          {{ transform.Highlight (strings.TrimSpace .) "bibtex" }}
+        </div>
+      </section>
+    {{ end }}
+  </article>
+{{ end }}

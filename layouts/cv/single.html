@@ -1,0 +1,14 @@
+{{/* CV page: same look as Blowfish's single page, but using the full site width
+   instead of Blowfish's 65-character reading column. */}}
+{{ define "main" }}
+  <article>
+    <header id="single_header" class="mt-5">
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        {{ .Title | emojify }}
+      </h1>
+    </header>
+    <section class="article-content max-w-full mt-6 mb-20 prose dark:prose-invert">
+      {{ .Content }}
+    </section>
+  </article>
+{{ end }}

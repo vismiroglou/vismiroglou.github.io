@@ -23,6 +23,7 @@ title = "VI"
   links = [
     { email = "mailto:vasilikii@create.aau.dk" },
     { github = "https://github.com/vismiroglou" },
+    { linkedin = "https://www.linkedin.com/in/vismiroglou"}
   ]
 
 # [params.author]
